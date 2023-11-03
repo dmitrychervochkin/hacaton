@@ -1,5 +1,6 @@
 import {Menu} from './core/menu'
 import {Module} from './core/module'
+import {getEvent} from './utils'
 
 export class ContextMenu extends Menu {
     constructor(selector){
@@ -26,16 +27,27 @@ export class ContextMenu extends Menu {
         })
     }
     
-    add(type, text) {
-        const newModule = new Module(type, text);
-        return this.el.insertAdjacentHTML("beforeend", newModule.toHTML());
+    add(array) {
+        for (let item in array){
+            const newModule = new Module(array[item].type, array[item].text);
+            this.el.insertAdjacentHTML("beforeend", newModule.toHTML());
+        }
     }
 
 }
 
-export class ModuleMenu extends Module{
+export class ContextModule extends  Module {
     constructor(type, text) {
-        super(type, text)
+      super(type, text)
     }
+  
+    trigger() {
+        document.body.addEventListener('click', event => {
+            if (event.target.className === 'menu-item'){
+                getEvent(event.target.dataset.type);
+            }
+            
+        })
+    }
+  
 }
-
