@@ -21,3 +21,4 @@ export class Menu {
     throw new Error(`"add" method should be implemented in Menu"`)
   }
 }
+
